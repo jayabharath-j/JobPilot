@@ -58,6 +58,8 @@ app.config["MYSQL_PORT"] = int(
     os.getenv("MYSQL_PORT", "3306")
 )
 
+app.config['MYSQL_SSL_MODE'] = 'REQUIRED'
+
 mysql = MySQL(app)
 
 
