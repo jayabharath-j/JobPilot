@@ -1,4 +1,4 @@
-# JobPilot — Smart Job Application Management System (Final)
+# JobPilot — Smart Job Application Management System
 
 A portfolio-ready Flask + MySQL application for managing a real job search.
 
