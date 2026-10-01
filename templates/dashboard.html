@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Dashboard — JobPilot
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ========================================
+     PAGE HEADER
+======================================== -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Hi, {{ session.get('user_name') }} 👋
+        </h2>
+
+        <p class="text-secondary mb-0">
+            Here's your job-search command center.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <a
+            href="{{ url_for('export_applications') }}"
+            class="btn btn-outline-secondary me-2"
+        >
+            ↓ Export CSV
+        </a>
+
+        <a
+            href="{{ url_for('add_application') }}"
+            class="btn btn-primary"
+        >
+            + Add Application
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     APPLICATION STATISTICS
+======================================== -->
+
+<div class="row g-3 mb-4">
+
+    {% for label, key in [
+        ('Total', 'Total'),
+        ('Applied', 'Applied'),
+        ('Shortlisted', 'Shortlisted'),
+        ('Interview', 'Interview'),
+        ('Selected', 'Selected'),
+        ('Rejected', 'Rejected')
+    ] %}
+
+        <div class="col-6 col-md-4 col-xl-2">
+
+            <div class="card stat-card p-3">
+
+                <div class="small text-secondary">
+                    {{ label }}
+                </div>
+
+                <div class="display-6 fw-bold">
+
+                    {% if key == 'Total' %}
+
+                        {{ total }}
+
+                    {% else %}
+
+                        {{ counts[key] }}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- ========================================
+     KEY METRICS
+======================================== -->
+
+<div class="row g-3 mb-4">
+
+
+    <!-- Interview Pipeline -->
+
+    <div class="col-md-4">
+
+        <div class="card metric-card p-3">
+
+            <span>
+                🎯 Interview pipeline
+            </span>
+
+            <strong>
+                {{ interview_rate }}%
+            </strong>
+
+            <div class="progress mt-2">
+
+                <div
+                    class="progress-bar"
+                    style="width: {{ interview_rate }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Selection Rate -->
+
+    <div class="col-md-4">
+
+        <div class="card metric-card p-3">
+
+            <span>
+                🏆 Selection rate
+            </span>
+
+            <strong>
+                {{ selection_rate }}%
+            </strong>
+
+            <div class="progress mt-2">
+
+                <div
+                    class="progress-bar"
+                    style="width: {{ selection_rate }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Follow-ups -->
+
+    <div class="col-md-4">
+
+        <div class="card metric-card p-3">
+
+            <span>
+                ⏰ Follow-ups due
+            </span>
+
+            <strong>
+                {{ followup_due }}
+            </strong>
+
+            <small class="text-secondary">
+                {{ interviews_7d }} interview(s) in next 7 days
+                · ⭐ {{ favorites }} favourites
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     RECENT APPLICATIONS + INTERVIEWS
+======================================== -->
+
+<div class="row g-4">
+
+
+    <!-- ====================================
+         RECENT APPLICATIONS
+    ==================================== -->
+
+    <div class="col-lg-7">
+
+        <div class="card p-4">
+
+            <div class="d-flex justify-content-between">
+
+                <h5>
+                    Recent applications
+                </h5>
+
+                <a href="{{ url_for('applications') }}">
+                    View all
+                </a>
+
+            </div>
+
+            <hr>
+
+
+            {% if recent %}
+
+                {% for a in recent %}
+
+                    <div
+                        class="d-flex justify-content-between gap-3 border-bottom py-3"
+                    >
+
+                        <div>
+
+                            <a
+                                class="fw-semibold text-decoration-none"
+                                href="{{ url_for('application_detail', app_id=a[0]) }}"
+                            >
+                                {{ a[2] }}
+                            </a>
+
+                            {% if a[13] %}
+
+                                <span class="text-warning">
+                                    ★
+                                </span>
+
+                            {% endif %}
+
+
+                            <div class="small text-secondary">
+
+                                {{ a[3] }}
+                                ·
+                                {{ a[7] | date_short }}
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="badge status-{{ a[9] | status_class }}">
+                            {{ a[9] }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="text-secondary">
+                    No applications yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ====================================
+         RIGHT COLUMN
+    ==================================== -->
+
+    <div class="col-lg-5">
+
+
+        <!-- ==================================
+             UPCOMING INTERVIEWS
+        ================================== -->
+
+        <div class="card p-4">
+
+            <div class="d-flex justify-content-between">
+
+                <h5>
+                    Upcoming interviews
+                </h5>
+
+                <a href="{{ url_for('interviews') }}">
+                    Manage
+                </a>
+
+            </div>
+
+            <hr>
+
+
+            {% if upcoming %}
+
+                {% for i in upcoming %}
+
+                    <div class="border-bottom py-3">
+
+                        <div class="fw-semibold">
+                            {{ i[8] }}
+                        </div>
+
+                        <div class="small">
+
+                            {{ i[9] }}
+                            ·
+                            {{ i[2] | date_short }}
+
+                            {% if i[3] %}
+                                · {{ i[3] | time_short }}
+                            {% endif %}
+
+                        </div>
+
+                        <div class="small text-secondary">
+                            {{ i[4] or 'Interview round' }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="text-secondary">
+                    No upcoming interviews.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ==================================
+             QUICK ACTIONS
+        ================================== -->
+
+        <div class="card p-4 mt-3">
+
+            <h5>
+                Quick actions
+            </h5>
+
+            <div class="d-grid gap-2">
+
+                <a
+                    class="btn btn-outline-primary"
+                    href="{{ url_for('applications', followup='due') }}"
+                >
+                    ⏰ View follow-ups due
+                </a>
+
+                <a
+                    class="btn btn-outline-warning"
+                    href="{{ url_for('applications', favorite='1') }}"
+                >
+                    ⭐ View favourites
+                </a>
+
+                <a
+                    class="btn btn-outline-secondary"
+                    href="{{ url_for('analytics') }}"
+                >
+                    📊 Open analytics
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

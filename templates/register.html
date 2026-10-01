@@ -1,0 +1,116 @@
+{% extends "auth.html" %}
+
+
+{% block title %}
+    Register — JobPilot
+{% endblock %}
+
+
+{% block auth_content %}
+
+<!-- ========================================
+     REGISTRATION FORM
+======================================== -->
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7 col-lg-6">
+
+        <div class="card p-4">
+
+
+            <!-- Page Header -->
+
+            <h2 class="fw-bold">
+                Create your account
+            </h2>
+
+            <p class="text-secondary">
+                Start organizing your applications.
+            </p>
+
+
+            <!-- Registration Form -->
+
+            <form method="post">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token }}"
+                >
+
+
+                <!-- Name -->
+
+                <label class="form-label">
+                    Name
+                </label>
+
+                <input
+                    name="name"
+                    class="form-control mb-3"
+                    required
+                >
+
+
+                <!-- Email -->
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control mb-3"
+                    required
+                >
+
+
+                <!-- Password -->
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control mb-3"
+                    minlength="8"
+                    required
+                >
+
+
+                <!-- Confirm Password -->
+
+                <label class="form-label">
+                    Confirm password
+                </label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    class="form-control mb-3"
+                    minlength="8"
+                    required
+                >
+
+
+                <!-- Create Account -->
+
+                <button class="btn btn-primary w-100">
+                    Create account
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

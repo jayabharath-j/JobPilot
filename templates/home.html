@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    JobPilot — Smart Job Tracker
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ========================================
+     HERO SECTION
+======================================== -->
+
+<div class="hero rounded-4 p-5 mb-4">
+
+    <div class="row align-items-center">
+
+        <!-- Hero Content -->
+
+        <div class="col-lg-8">
+
+            <span class="badge text-bg-primary mb-3">
+                SMART JOB TRACKER
+            </span>
+
+            <h1 class="display-4 fw-bold">
+                Your entire job search. One place.
+            </h1>
+
+            <p class="lead text-secondary">
+                Track applications, interviews, follow-ups, resumes,
+                recruiter details and progress with a professional dashboard.
+            </p>
+
+
+            <!-- Hero Actions -->
+
+            <a
+                class="btn btn-primary btn-lg me-2"
+                href="{{ url_for('register') }}"
+            >
+                Start Tracking
+            </a>
+
+            <a
+                class="btn btn-outline-secondary btn-lg"
+                href="{{ url_for('login') }}"
+            >
+                Login
+            </a>
+
+        </div>
+
+
+        <!-- Hero Illustration -->
+
+        <div class="col-lg-4 text-center mt-4 mt-lg-0">
+
+            <div class="display-1">
+                🚀
+            </div>
+
+            <h4>
+                Apply. Track. Follow up. Improve.
+            </h4>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     FEATURES
+======================================== -->
+
+<div class="row g-3">
+
+
+    <!-- Application Pipeline -->
+
+    <div class="col-md-4">
+
+        <div class="card h-100 p-4">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h5>
+                Application Pipeline
+            </h5>
+
+            <p class="text-secondary mb-0">
+                Search, filter, favourite and monitor every application
+                from Applied to Selected.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Interview & Follow-ups -->
+
+    <div class="col-md-4">
+
+        <div class="card h-100 p-4">
+
+            <div class="feature-icon">
+                📅
+            </div>
+
+            <h5>
+                Interview & Follow-ups
+            </h5>
+
+            <p class="text-secondary mb-0">
+                Never lose track of interview rounds or recruiter
+                follow-up dates.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Analytics & Export -->
+
+    <div class="col-md-4">
+
+        <div class="card h-100 p-4">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h5>
+                Analytics & Export
+            </h5>
+
+            <p class="text-secondary mb-0">
+                Understand your pipeline with charts and export
+                your applications to CSV.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

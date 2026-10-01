@@ -1,0 +1,100 @@
+{% extends "auth.html" %}
+
+
+{% block title %}
+    Login — JobPilot
+{% endblock %}
+
+
+{% block auth_content %}
+
+<!-- ========================================
+     LOGIN FORM
+======================================== -->
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6 col-lg-5">
+
+        <div class="card p-4">
+
+
+            <!-- Page Header -->
+
+            <h2 class="fw-bold">
+                Welcome back
+            </h2>
+
+            <p class="text-secondary">
+                Log in to continue tracking your job search.
+            </p>
+
+
+            <!-- Login Form -->
+
+            <form method="post">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token }}"
+                >
+
+
+                <!-- Email -->
+
+                <label class="form-label">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control mb-3"
+                    required
+                >
+
+
+                <!-- Password -->
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control mb-3"
+                    required
+                >
+
+
+                <!-- Login Button -->
+
+                <button class="btn btn-primary w-100">
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- Register Link -->
+
+            <p class="small text-center mt-3 mb-0">
+
+                No account?
+
+                <a href="{{ url_for('register') }}">
+                    Create one
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

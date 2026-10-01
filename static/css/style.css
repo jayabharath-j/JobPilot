@@ -1,0 +1,663 @@
+/* =========================================================
+   JOBPILOT FINAL
+   Polished & Responsive UI
+   ========================================================= */
+
+
+/* =========================================================
+   1. LIGHT MODE / DEFAULT VARIABLES
+   ========================================================= */
+
+:root {
+    --jp-bg: #f6f8fb;
+    --jp-surface: #ffffff;
+    --jp-surface-soft: #f8fafc;
+
+    --jp-border: #e4e9f0;
+
+    --jp-text: #17202b;
+    --jp-muted: #687586;
+
+    --jp-shadow: 0 10px 30px rgba(20, 30, 50, 0.06);
+}
+
+
+/* =========================================================
+   2. GLOBAL
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--jp-bg);
+    color: var(--jp-text);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+a {
+    transition: 0.15s ease;
+}
+
+
+/* =========================================================
+   3. NAVBAR
+   ========================================================= */
+
+.app-navbar {
+    background: #111827;
+    box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+    letter-spacing: 0.2px;
+}
+
+.navbar .nav-link {
+    opacity: 0.88;
+}
+
+.navbar .nav-link:hover {
+    opacity: 1;
+}
+
+.theme-toggle {
+    min-width: 118px;
+}
+
+
+/* =========================================================
+   4. PAGE LAYOUT
+   ========================================================= */
+
+.page-shell {
+    min-height: calc(100vh - 150px);
+}
+
+
+/* =========================================================
+   5. COMMON CARDS
+   ========================================================= */
+
+.card {
+    background: var(--jp-surface);
+    border: 1px solid var(--jp-border);
+    border-radius: 16px;
+    box-shadow: var(--jp-shadow);
+}
+
+
+/* =========================================================
+   6. HERO SECTION — LIGHT MODE
+   ========================================================= */
+
+.hero {
+    background: linear-gradient(
+        135deg,
+        #eef4ff,
+        #ffffff
+    ) !important;
+
+    border: 1px solid #e1e8f5 !important;
+
+    color: #17202b !important;
+}
+
+
+/* Hero headings */
+
+.hero h1,
+.hero h2,
+.hero h3,
+.hero h4,
+.hero h5,
+.hero h6 {
+    color: #17202b !important;
+}
+
+
+/* Hero paragraph */
+
+.hero p {
+    color: #687586 !important;
+}
+
+
+/*
+   If Bootstrap classes such as text-light/text-white
+   are used inside the hero, override them in LIGHT MODE.
+*/
+
+[data-bs-theme="light"] .hero .text-light,
+[data-bs-theme="light"] .hero .text-white {
+    color: #17202b !important;
+}
+
+
+/* Hero muted text */
+
+[data-bs-theme="light"] .hero .text-secondary {
+    color: #687586 !important;
+}
+
+
+/* =========================================================
+   7. HERO BUTTONS — LIGHT MODE
+   ========================================================= */
+
+.hero .btn-outline-secondary {
+    color: #334155;
+    border-color: #64748b;
+}
+
+.hero .btn-outline-secondary:hover {
+    background: #334155;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   8. STAT / METRIC CARDS
+   ========================================================= */
+
+.stat-card,
+.metric-card {
+    min-height: 112px;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.stat-card:hover,
+.metric-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 34px rgba(20, 30, 50, 0.1);
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.metric-card strong {
+    font-size: 2rem;
+}
+
+.metric-mini {
+    padding: 18px;
+
+    border: 1px solid var(--jp-border);
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.metric-mini strong {
+    font-size: 1.6rem;
+}
+
+
+/* =========================================================
+   9. FEATURE ICONS
+   ========================================================= */
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   10. FORMS
+   ========================================================= */
+
+.form-control,
+.form-select,
+.input-group-text {
+    background: var(--jp-surface);
+    color: var(--jp-text);
+    border-color: var(--jp-border);
+}
+
+.form-control::placeholder {
+    color: var(--jp-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: var(--jp-surface);
+    color: var(--jp-text);
+}
+
+
+/* =========================================================
+   11. TABLES
+   ========================================================= */
+
+.table {
+    --bs-table-bg: var(--jp-surface);
+    --bs-table-color: var(--jp-text);
+    --bs-table-border-color: var(--jp-border);
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.9rem 0.7rem;
+}
+
+.table tbody tr:hover {
+    background: var(--jp-surface-soft);
+}
+
+
+/* =========================================================
+   12. BORDERS / TEXT / FOOTER
+   ========================================================= */
+
+.border,
+.border-top,
+.border-bottom,
+hr {
+    border-color: var(--jp-border) !important;
+}
+
+.text-secondary {
+    color: var(--jp-muted) !important;
+}
+
+.app-footer {
+    border-color: var(--jp-border) !important;
+}
+
+
+/* =========================================================
+   13. PROGRESS BAR
+   ========================================================= */
+
+.progress {
+    background: var(--jp-border);
+}
+
+
+/* =========================================================
+   14. ICON BUTTON
+   ========================================================= */
+
+.icon-btn {
+    border: 0;
+    background: transparent;
+
+    font-size: 1.15rem;
+
+    padding: 0.15rem 0.3rem;
+}
+
+
+/* =========================================================
+   15. TEXT HELPERS
+   ========================================================= */
+
+.pre-wrap {
+    white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   16. TIMELINE
+   ========================================================= */
+
+.timeline {
+    border-left: 2px solid var(--jp-border);
+
+    margin-left: 8px;
+    padding-left: 20px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.timeline-item::before {
+    content: "";
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #0d6efd;
+
+    position: absolute;
+
+    left: -26px;
+    top: 5px;
+
+    box-shadow:
+        0 0 0 4px var(--jp-surface);
+}
+
+
+/* =========================================================
+   17. CHARTS
+   ========================================================= */
+
+.chart-card canvas {
+    max-height: 330px;
+}
+
+
+/* =========================================================
+   18. INTERVIEW CARD
+   ========================================================= */
+
+.interview-card {
+    transition: transform 0.15s ease;
+}
+
+.interview-card:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   19. APPLICATION STATUS COLORS
+   ========================================================= */
+
+.status-applied {
+    background: #e8f1ff;
+    color: #174ea6;
+}
+
+.status-shortlisted {
+    background: #fff3cd;
+    color: #8a6100;
+}
+
+.status-interview {
+    background: #efe6ff;
+    color: #6333a5;
+}
+
+.status-selected {
+    background: #dff7e8;
+    color: #16733c;
+}
+
+.status-rejected {
+    background: #ffe4e4;
+    color: #a12626;
+}
+
+.status-withdrawn {
+    background: #eceff1;
+    color: #4f5b62;
+}
+
+
+/* =========================================================
+   20. DARK MODE VARIABLES
+   ========================================================= */
+
+[data-bs-theme="dark"] {
+    --jp-bg: #0e141b;
+    --jp-surface: #171e26;
+    --jp-surface-soft: #1d2731;
+
+    --jp-border: #303b47;
+
+    --jp-text: #edf2f7;
+    --jp-muted: #a8b3c0;
+
+    --jp-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+    color-scheme: dark;
+}
+
+
+/* =========================================================
+   21. DARK MODE NAVBAR
+   ========================================================= */
+
+[data-bs-theme="dark"] .app-navbar {
+    background: #0b1016;
+}
+
+
+/* =========================================================
+   22. DARK MODE HERO
+   ========================================================= */
+
+[data-bs-theme="dark"] .hero {
+    background: linear-gradient(
+        135deg,
+        #17283d,
+        #171e26
+    ) !important;
+
+    border-color: #2d4057 !important;
+
+    color: #edf2f7 !important;
+}
+
+
+/* Dark hero headings */
+
+[data-bs-theme="dark"] .hero h1,
+[data-bs-theme="dark"] .hero h2,
+[data-bs-theme="dark"] .hero h3,
+[data-bs-theme="dark"] .hero h4,
+[data-bs-theme="dark"] .hero h5,
+[data-bs-theme="dark"] .hero h6 {
+    color: #edf2f7 !important;
+}
+
+
+/* Dark hero paragraph */
+
+[data-bs-theme="dark"] .hero p {
+    color: #a8b3c0 !important;
+}
+
+
+/*
+   Override Bootstrap text classes inside the dark hero.
+*/
+
+[data-bs-theme="dark"] .hero .text-dark {
+    color: #edf2f7 !important;
+}
+
+[data-bs-theme="dark"] .hero .text-secondary {
+    color: #a8b3c0 !important;
+}
+
+
+/* =========================================================
+   23. DARK MODE OUTLINE BUTTON
+   ========================================================= */
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+    color: #d8e0e8;
+    border-color: #596674;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+    background: #303a46;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   24. DARK MODE CLOSE BUTTON
+   ========================================================= */
+
+[data-bs-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%);
+}
+
+
+/* =========================================================
+   25. DARK MODE ALERT
+   ========================================================= */
+
+[data-bs-theme="dark"] .alert {
+    border-color: var(--jp-border);
+}
+
+
+/* =========================================================
+   26. DARK MODE LIGHT BACKGROUND
+   ========================================================= */
+
+[data-bs-theme="dark"] .text-bg-light {
+    background: #2a333d !important;
+    color: #e8edf2 !important;
+}
+
+
+/* =========================================================
+   27. DARK MODE APPLICATION STATUS COLORS
+   ========================================================= */
+
+[data-bs-theme="dark"] .status-applied {
+    background: #19345c;
+    color: #9ec5ff;
+}
+
+[data-bs-theme="dark"] .status-shortlisted {
+    background: #4a3b12;
+    color: #ffe69c;
+}
+
+[data-bs-theme="dark"] .status-interview {
+    background: #3c275d;
+    color: #d7b8ff;
+}
+
+[data-bs-theme="dark"] .status-selected {
+    background: #163e2a;
+    color: #9be7b9;
+}
+
+[data-bs-theme="dark"] .status-rejected {
+    background: #4a2225;
+    color: #ffb3b8;
+}
+
+[data-bs-theme="dark"] .status-withdrawn {
+    background: #2a3138;
+    color: #c4cbd2;
+}
+
+
+/* =========================================================
+   28. RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .theme-toggle {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   29. RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .hero {
+        padding: 2rem !important;
+    }
+
+    .display-4 {
+        font-size: 2.3rem;
+    }
+
+    .table {
+        min-width: 920px;
+    }
+
+}
+
+/* ========================================
+   JOBPILOT LOGO
+======================================== */
+
+.jobpilot-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+}
+
+.jobpilot-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+}
+
+/* ========================================
+   JOBPILOT BRAND
+======================================== */
+
+.jobpilot-brand-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.jobpilot-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+}
+
+.jobpilot-tagline {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 3px;
+}
+
+.jobpilot-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 575.98px) {
+
+    .jobpilot-logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .jobpilot-brand {
+        font-size: 1.1rem;
+    }
+
+    .jobpilot-tagline {
+        font-size: 0.55rem;
+    }
+
+}

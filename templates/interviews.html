@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Interviews — JobPilot
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ========================================
+     PAGE HEADER
+======================================== -->
+
+<div class="mb-4">
+
+    <h2 class="fw-bold">
+        Interviews
+    </h2>
+
+    <p class="text-secondary">
+        Schedule rounds and keep the next conversation visible.
+    </p>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- ========================================
+         ADD INTERVIEW FORM
+    ======================================== -->
+
+    <div class="col-lg-5">
+
+        <div class="card p-4">
+
+            <h5 class="mb-3">
+                Add interview
+            </h5>
+
+
+            <form method="post">
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token }}"
+                >
+
+
+                <!-- Application -->
+
+                <label class="form-label">
+                    Application
+                </label>
+
+                <select
+                    name="application_id"
+                    class="form-select mb-3"
+                    required
+                >
+
+                    <option value="">
+                        Select application
+                    </option>
+
+                    {% for a in applications %}
+
+                        <option value="{{ a[0] }}">
+                            {{ a[1] }} — {{ a[2] }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <!-- Date -->
+
+                <label class="form-label">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    name="interview_date"
+                    class="form-control mb-3"
+                    required
+                >
+
+
+                <!-- Time -->
+
+                <label class="form-label">
+                    Time
+                </label>
+
+                <input
+                    type="time"
+                    name="interview_time"
+                    class="form-control mb-3"
+                >
+
+
+                <!-- Round -->
+
+                <label class="form-label">
+                    Round
+                </label>
+
+                <input
+                    name="round_name"
+                    class="form-control mb-3"
+                    placeholder="Technical / HR"
+                >
+
+
+                <!-- Mode -->
+
+                <label class="form-label">
+                    Mode
+                </label>
+
+                <select
+                    name="mode"
+                    class="form-select mb-3"
+                >
+
+                    {% for m in interview_modes %}
+
+                        <option>
+                            {{ m }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <!-- Notes -->
+
+                <label class="form-label">
+                    Notes
+                </label>
+
+                <textarea
+                    name="notes"
+                    class="form-control mb-3"
+                    rows="4"
+                    placeholder="Meeting link, preparation topics, interviewer notes..."
+                ></textarea>
+
+
+                <!-- Submit -->
+
+                <button class="btn btn-primary w-100">
+                    Add Interview
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         INTERVIEW LIST
+    ======================================== -->
+
+    <div class="col-lg-7">
+
+        {% if interviews %}
+
+            {% for i in interviews %}
+
+                <div
+                    class="card p-3 mb-3 interview-card"
+                    data-date="{{ i[2] }}"
+                    data-time="{{ i[3] or '' }}"
+                >
+
+                    <!-- Interview Header -->
+
+                    <div
+                        class="d-flex justify-content-between align-items-start gap-3"
+                    >
+
+                        <div>
+
+                            <h5 class="mb-1">
+                                {{ i[8] }}
+                            </h5>
+
+                            <div class="text-secondary">
+                                {{ i[9] }} · {{ i[4] or 'Interview round' }}
+                            </div>
+
+                        </div>
+
+
+                        <span class="badge text-bg-light">
+                            {{ i[5] }}
+                        </span>
+
+                    </div>
+
+
+                    <!-- Date & Time -->
+
+                    <div class="small mt-2">
+
+                        📅 {{ i[2]|date_short }}
+
+                        {% if i[3] %}
+                            · ⏰ {{ i[3]|time_short }}
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Countdown -->
+
+                    <div class="countdown small fw-semibold mt-1"></div>
+
+
+                    <!-- Notes -->
+
+                    {% if i[6] %}
+
+                        <p class="mt-2 mb-2 pre-wrap">
+                            {{ i[6] }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Actions -->
+
+                    <div>
+
+                        <a
+                            href="{{ url_for('edit_interview', interview_id=i[0]) }}"
+                            class="btn btn-sm btn-outline-secondary"
+                        >
+                            Edit
+                        </a>
+
+
+                        <form
+                            class="d-inline"
+                            method="post"
+                            action="{{ url_for('delete_interview', interview_id=i[0]) }}"
+                            onsubmit="return confirmDelete('interview')"
+                        >
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token }}"
+                            >
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <!-- Empty State -->
+
+            <div class="text-center py-5 text-secondary">
+                No interviews recorded.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}

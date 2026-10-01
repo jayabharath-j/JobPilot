@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Analytics — JobPilot
+{% endblock %}
+
+{% block head %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- ========================================
+     PAGE HEADER
+======================================== -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+    <div>
+        <h2 class="fw-bold">Analytics</h2>
+        <p class="text-secondary mb-0">
+            See where your job-search effort is going.
+        </p>
+    </div>
+
+    <a
+        class="btn btn-outline-secondary"
+        href="{{ url_for('export_applications') }}"
+    >
+        ↓ Export CSV
+    </a>
+
+</div>
+
+
+<!-- ========================================
+     CHARTS
+======================================== -->
+
+<div class="row g-4">
+
+    <!-- Status Breakdown -->
+    <div class="col-lg-6">
+        <div class="card p-4 chart-card">
+
+            <h5>Status breakdown</h5>
+
+            <canvas id="statusChart"></canvas>
+
+        </div>
+    </div>
+
+
+    <!-- Monthly Applications -->
+    <div class="col-lg-6">
+        <div class="card p-4 chart-card">
+
+            <h5>Monthly applications</h5>
+
+            <canvas id="monthlyChart"></canvas>
+
+        </div>
+    </div>
+
+
+    <!-- Job Types -->
+    <div class="col-lg-6">
+        <div class="card p-4 chart-card">
+
+            <h5>Job types</h5>
+
+            <canvas id="typeChart"></canvas>
+
+        </div>
+    </div>
+
+
+    <!-- Top Companies -->
+    <div class="col-lg-6">
+        <div class="card p-4 chart-card">
+
+            <h5>Top companies</h5>
+
+            <canvas id="companyChart"></canvas>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     LOCATION + PIPELINE SUMMARY
+======================================== -->
+
+<div class="row g-4 mt-1">
+
+    <!-- Top Locations -->
+    <div class="col-lg-6">
+
+        <div class="card p-4">
+
+            <h5>Top locations</h5>
+
+            <hr>
+
+            {% for row in location_rows %}
+
+                <div class="d-flex justify-content-between py-2 border-bottom">
+
+                    <span>{{ row[0] }}</span>
+
+                    <strong>{{ row[1] }}</strong>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-secondary">
+                    No location data yet.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Pipeline Summary -->
+    <div class="col-lg-6">
+
+        <div class="card p-4">
+
+            <h5>Pipeline summary</h5>
+
+            <div class="row g-3 mt-1">
+
+                <!-- Total -->
+                <div class="col-6">
+
+                    <div class="metric-mini">
+
+                        <span>Total</span>
+
+                        <strong>
+                            {{ summary[0] or 0 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Selected -->
+                <div class="col-6">
+
+                    <div class="metric-mini">
+
+                        <span>Selected</span>
+
+                        <strong>
+                            {{ summary[1] or 0 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Rejected -->
+                <div class="col-6">
+
+                    <div class="metric-mini">
+
+                        <span>Rejected</span>
+
+                        <strong>
+                            {{ summary[2] or 0 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Interviews -->
+                <div class="col-6">
+
+                    <div class="metric-mini">
+
+                        <span>Interviews</span>
+
+                        <strong>
+                            {{ summary[3] or 0 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     CHART DATA + CONFIGURATION
+======================================== -->
+
+<script>
+
+    const statusData = {{ status_rows | tojson }};
+    const monthlyData = {{ monthly_rows | tojson }};
+    const typeData = {{ type_rows | tojson }};
+    const companyData = {{ company_rows | tojson }};
+
+
+    /* ========================================
+       THEME COLORS
+    ======================================== */
+
+    const isDark =
+        document.documentElement.getAttribute("data-bs-theme") === "dark";
+
+    const tick = isDark
+        ? "#a7b2bf"
+        : "#687586";
+
+    const grid = isDark
+        ? "#303a46"
+        : "#e5e9ef";
+
+
+    /* ========================================
+       CHART BUILDER
+    ======================================== */
+
+    function chart(id, type, data, opts = {}) {
+
+        new Chart(
+            document.getElementById(id),
+            {
+                type: type,
+
+                data: {
+                    labels: data.map(item => item[0]),
+
+                    datasets: [
+                        {
+                            data: data.map(item => item[1]),
+
+                            borderWidth: 2,
+
+                            tension: 0.3
+                        }
+                    ]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+                            display: type === "doughnut",
+
+                            labels: {
+                                color: tick
+                            }
+                        }
+
+                    },
+
+                    scales:
+                        type === "doughnut"
+                            ? {}
+                            : {
+
+                                x: {
+                                    ticks: {
+                                        color: tick
+                                    },
+
+                                    grid: {
+                                        color: grid
+                                    }
+                                },
+
+                                y: {
+                                    beginAtZero: true,
+
+                                    ticks: {
+                                        color: tick,
+                                        precision: 0
+                                    },
+
+                                    grid: {
+                                        color: grid
+                                    }
+                                }
+
+                            },
+
+                    ...opts
+                }
+            }
+        );
+    }
+
+
+    /* ========================================
+       CREATE CHARTS
+    ======================================== */
+
+    chart(
+        "statusChart",
+        "doughnut",
+        statusData
+    );
+
+
+    chart(
+        "monthlyChart",
+        "line",
+        monthlyData
+    );
+
+
+    chart(
+        "typeChart",
+        "bar",
+        typeData
+    );
+
+
+    chart(
+        "companyChart",
+        "bar",
+        companyData,
+        {
+            indexAxis: "y"
+        }
+    );
+
+</script>
+
+{% endblock %}

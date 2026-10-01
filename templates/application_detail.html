@@ -1,0 +1,401 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ application[2] }} — JobPilot
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ========================================
+     PAGE HEADER
+======================================== -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+    <div>
+
+        <a
+            href="{{ url_for('applications') }}"
+            class="text-decoration-none"
+        >
+            ← Applications
+        </a>
+
+        <h2 class="fw-bold mt-2 mb-1">
+
+            {{ application[2] }}
+
+            {% if application[13] %}
+                <span class="text-warning">★</span>
+            {% endif %}
+
+        </h2>
+
+        <p class="text-secondary mb-0">
+            {{ application[3] }}
+        </p>
+
+    </div>
+
+
+    <!-- Header Actions -->
+
+    <div>
+
+        <a
+            href="{{ url_for('edit_application', app_id=application[0]) }}"
+            class="btn btn-primary"
+        >
+            Edit
+        </a>
+
+        {% if application[8] %}
+
+            <a
+                href="{{ application[8] }}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline-secondary"
+            >
+                Open Job ↗
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     MAIN CONTENT
+======================================== -->
+
+<div class="row g-4">
+
+
+    <!-- ====================================
+         LEFT COLUMN
+    ==================================== -->
+
+    <div class="col-lg-7">
+
+
+        <!-- ==================================
+             APPLICATION DETAILS
+        ================================== -->
+
+        <div class="card p-4 mb-4">
+
+            <div class="d-flex justify-content-between">
+
+                <h5>
+                    Application details
+                </h5>
+
+                <span class="badge status-{{ application[9] | status_class }}">
+                    {{ application[9] }}
+                </span>
+
+            </div>
+
+            <hr>
+
+
+            <div class="row g-3">
+
+
+                <!-- Location -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Location
+                    </small>
+
+                    <div>
+                        {{ application[4] or '—' }}
+                    </div>
+
+                </div>
+
+
+                <!-- Job Type -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Job type
+                    </small>
+
+                    <div>
+                        {{ application[5] }}
+                    </div>
+
+                </div>
+
+
+                <!-- Salary -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Salary
+                    </small>
+
+                    <div>
+                        {{ application[6] or '—' }}
+                    </div>
+
+                </div>
+
+
+                <!-- Applied On -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Applied on
+                    </small>
+
+                    <div>
+                        {{ application[7] | date_short }}
+                    </div>
+
+                </div>
+
+
+                <!-- Follow-up -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Follow-up
+                    </small>
+
+                    <div>
+
+                        {{ application[14] | date_short if application[14] else '—' }}
+
+                        {% if application[15] %}
+
+                            <span class="small text-secondary">
+                                · {{ application[15] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Resume Version -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Resume version
+                    </small>
+
+                    <div>
+                        {{ application[16] or '—' }}
+                    </div>
+
+                </div>
+
+
+                <!-- Recruiter -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Recruiter
+                    </small>
+
+                    <div>
+                        {{ application[17] or '—' }}
+                    </div>
+
+                </div>
+
+
+                <!-- Contact -->
+
+                <div class="col-sm-6">
+
+                    <small class="text-secondary">
+                        Contact
+                    </small>
+
+                    <div>
+                        {{ application[18] or application[19] or '—' }}
+                    </div>
+
+                </div>
+
+
+                <!-- Notes -->
+
+                <div class="col-12">
+
+                    <small class="text-secondary">
+                        Notes
+                    </small>
+
+                    <div class="mt-1 pre-wrap">
+                        {{ application[10] or 'No notes added.' }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================
+             INTERVIEWS
+        ================================== -->
+
+        <div class="card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Interviews
+                </h5>
+
+                <a
+                    href="{{ url_for('interviews') }}"
+                    class="btn btn-sm btn-outline-primary"
+                >
+                    Manage
+                </a>
+
+            </div>
+
+            <hr>
+
+
+            {% if interview_rows %}
+
+                {% for i in interview_rows %}
+
+                    <div class="border rounded-3 p-3 mb-2">
+
+                        <div class="d-flex justify-content-between">
+
+                            <strong>
+                                {{ i[4] or 'Interview round' }}
+                            </strong>
+
+                            <span class="badge text-bg-light">
+                                {{ i[5] }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="small text-secondary mt-1">
+
+                            {{ i[2] | date_short }}
+
+                            {% if i[3] %}
+                                · {{ i[3] | time_short }}
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if i[6] %}
+
+                            <div class="mt-2 pre-wrap">
+                                {{ i[6] }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="text-secondary mb-0">
+                    No interviews recorded yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ====================================
+         RIGHT COLUMN
+    ==================================== -->
+
+    <div class="col-lg-5">
+
+
+        <!-- ==================================
+             STATUS HISTORY
+        ================================== -->
+
+        <div class="card p-4">
+
+            <h5>
+                Status history
+            </h5>
+
+            <hr>
+
+
+            {% if history %}
+
+                <div class="timeline">
+
+                    {% for h in history %}
+
+                        <div class="timeline-item">
+
+                            <div class="fw-semibold">
+                                {{ h[1] }}
+                            </div>
+
+                            <div class="small text-secondary">
+
+                                {% if h[0] %}
+                                    {{ h[0] }} →
+                                {% endif %}
+
+                                {{ h[1] }}
+
+                                · {{ h[2] }}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="text-secondary mb-0">
+                    No history yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
