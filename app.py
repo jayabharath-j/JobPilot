@@ -58,12 +58,14 @@ app.config["MYSQL_PORT"] = int(
     os.getenv("MYSQL_PORT", "3306")
 )
 
-app.config['MYSQL_SSL'] = {
-    'ssl_mode': 'REQUIRED'
+# TiDB Cloud requires a secure TLS connection.
+app.config["MYSQL_CUSTOM_OPTIONS"] = {
+    "ssl": {
+        "ca": "/etc/ssl/certs/ca-certificates.crt"
+    }
 }
 
 mysql = MySQL(app)
-
 
 # ============================================================
 # CONSTANTS
