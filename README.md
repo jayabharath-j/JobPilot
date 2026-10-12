@@ -44,4 +44,3 @@ Python · Flask · MySQL · MySQLdb · HTML · CSS · Bootstrap 5 · JavaScript 
    `python app.py`
 7. Open `http://127.0.0.1:5000`
 
-Never commit `.env` or your MySQL password to GitHub.
